@@ -4,16 +4,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.ts",
-    "bulid": "rimraf dist && tsc",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "pre-commit": [
-    "ts.check",
-    "bulid",
-    "add-build"
-  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
