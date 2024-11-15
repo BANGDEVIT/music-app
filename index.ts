@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as database from "./config/database";
 import cors  from 'cors';
 import path from "path";
+import methodOverride from "method-override";
 import bodyParser from "body-parser";
 import clientRoute from "./routers/client";
 import adminRoute from "./routers/admin";
@@ -22,6 +23,9 @@ app.use(express.static(`${__dirname}/public`));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
+
+//method 
+app.use(methodOverride("_method"));
 
 
 // parse application/json sử dụng cái này là ko cần sài body-parser

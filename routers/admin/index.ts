@@ -6,6 +6,8 @@ import { topicRoute } from "./topic.route";
 
 import { songRoute } from "./song.route";
 
+import { uploadRoute } from "./upload.route";
+
 import { systemconfix } from "../../config/confix";
 
 const adminRoute = (app : Express) :void =>{
@@ -16,6 +18,9 @@ const adminRoute = (app : Express) :void =>{
   app.use(`${PATH_ADMIN}/topics`,topicRoute);
 
   app.use(`${PATH_ADMIN}/songs`,songRoute);
+
+  app.use(`${PATH_ADMIN}/upload`,uploadRoute);
+
 
 }
 

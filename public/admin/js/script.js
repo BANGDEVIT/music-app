@@ -227,3 +227,32 @@ if (sort){
 }
 
 // End Sort
+
+//Upload audio
+
+const uploadAudio = document.querySelector("[upload-audio]");
+
+if (uploadImage) {
+  const uploadAudioInput = uploadAudio.querySelector("[upload-audio-input]");
+  const uploadAudioPlay = uploadAudio.querySelector("[upload-audio-play]");
+  const source = uploadAudio.querySelector("source");
+
+
+  uploadAudioInput.addEventListener('change',(e) =>{
+    const file = e.target.files[0];
+    if (file ) {
+      source.src = URL.createObjectURL(file);
+      uploadAudioPlay.load();
+    }
+
+    // const deleteImageInput = document.querySelector("[delete-audio-input]");
+
+    // if (deleteImageInput) {
+    //   deleteImageInput.addEventListener('click',() =>{
+    //     uploadImageInput.value = "";
+    //     uploadImagePreview.src= "";
+    //   })
+    // }
+  })
+}
+//End Upload audio
