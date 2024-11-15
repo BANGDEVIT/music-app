@@ -1,0 +1,25 @@
+.sider
+  .inner-menu
+    ul 
+      li 
+        a(href=`/${prefixAdmin}/dashboard`) Tổng quan
+      //- if (role && role.permissions && role.permissions.includes("products_view"))
+      li 
+        a(href=`/${prefixAdmin}/topics`) Quản lí chủ đề 
+      //- if (role && role.permissions && role.permissions.includes("products-category_view"))
+      li 
+        a(href=`/${prefixAdmin}/songs`) Quản lí bài hát 
+      //- if (role && role.permissions && role.permissions.includes("roles_view"))
+      li 
+        a(href=`/${prefixAdmin}/singers`) Quản lí ca sĩ
+      //- if (role && role.permissions && role.permissions.includes("roles_permissions"))
+      li 
+        a(href=`/${prefixAdmin}/roles/permission`) Phân quyền 
+      //- if (role && role.permissions && role.permissions.includes("accounts_view"))
+      li 
+        a(href=`/${prefixAdmin}/accounts`) Danh sách tài khoản
+      //- if (role && role.permissions && role.permissions.includes("settings-view"))
+      li 
+        a(href=`/${prefixAdmin}/users`) Danh sách tài khoản user
+      li 
+        a(href=`/${prefixAdmin}/settings/general`) Cài đặt chung 

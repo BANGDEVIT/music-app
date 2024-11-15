@@ -2,6 +2,7 @@ import { Request,Response } from "express"
 import Topic from "../../model/topic.model";
 import Song from "../../model/song.model";
 import Singer from "../../model/singer.model";
+import FavoriteSong from "../../model/favoriteSong.model";
 
 //[GET] /songs/:slugTopic
 export const list = async(req : Request,res:Response) => {
@@ -25,6 +26,8 @@ export const list = async(req : Request,res:Response) => {
       })
       song["infoSinger"] = infoSinger;
     }
+
+
     
     res.render("client/pages/songs/list",{
       pageTitle: topic.title,
@@ -46,6 +49,7 @@ export const detail = async(req : Request,res:Response) => {
       status : "active"
     })
 
+
     const singer = await Singer.findOne({
       _id : song.singerId,
       deleted : false,
@@ -56,7 +60,11 @@ export const detail = async(req : Request,res:Response) => {
       deleted : false
     })
 
-    song["inforSinger"] = singer;
+    const favoriteSong = await FavoriteSong.findOne({
+      songId : song.id
+    })
+
+    song["isFavoriteSong"] = favoriteSong ? true : false;
 
     res.render("client/pages/songs/detail",{
       pageTitle: "chi tiết Bài hát",
@@ -93,6 +101,75 @@ export const like = async(req : Request,res:Response) => {
       code : 200,
       message : "Like thành công",
       like : newLike
+    })
+  } catch (error) {
+    res.redirect("/")
+  }
+}
+
+//[PATCH] /songs/favorite/:typeFavorite/:idSong
+export const favorite = async(req : Request,res:Response) => {
+  try {
+    const idSong : string = req.params.idSong; 
+    const typeFavorite : string = req.params.typeFavorite;
+
+    switch (typeFavorite) {
+      case "favorite":
+        const existFavoriteSong = await FavoriteSong.findOne({
+          // userId : req.user._id,
+          songId : idSong
+        })
+        if (!existFavoriteSong){
+          const record = new FavoriteSong({
+            // userId : req.user._id,
+            songId : idSong
+          })
+          await record.save();
+        }
+        break;
+      case "unfavorite":
+       await FavoriteSong.deleteOne({
+            // userId : req.user._id,
+            songId : idSong
+        })
+        
+        break;
+      default:
+        break;
+    }
+
+    res.json({
+      code : 200,
+      message : "Like thành công"
+    })
+  } catch (error) {
+    res.redirect("/")
+  }
+}
+
+//[PATCH] /songs/listen/:idSong
+export const listen = async(req : Request,res:Response) => {
+  try {
+    const idSong : string = req.params.idSong; 
+
+    const song = await Song.findOne({
+      _id : idSong,
+      deleted : false,
+      status : "active"
+    })
+    const newListen : number = song.listen +1;
+    await Song.updateOne({
+      _id : idSong
+    },{
+      listen : newListen
+    })
+
+    const songNew = await Song.findOne({_id : idSong});
+    //like:["id1"]
+
+    res.json({
+      code : 200,
+      listen : songNew.listen 
     })
   } catch (error) {
     res.redirect("/")
